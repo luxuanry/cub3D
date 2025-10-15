@@ -1,6 +1,26 @@
-// includes/cub3d.h
-#include <fcntl.h>
-#include <stddef.h>
+#ifndef CUB3D_H
+# define CUB3D_H
+
+# include <stdio.h>
+# include <stdlib.h>
+# include <unistd.h>
+# include <fcntl.h>
+# include <math.h>
+
+// 如果你有 libft
+// # include "libft.h"
+
+// 如果没有 libft，需要这些函数声明
+int     ft_strlen(char *str);
+int     ft_strcmp(char *s1, char *s2);
+int     ft_strncmp(char *s1, char *s2, int n);
+char    *ft_strdup(char *s);
+char    *ft_strtrim(char *s, char *set);
+char    **ft_split(char *s, char c);
+int     ft_atoi(char *str);
+void    ft_putstr_fd(char *s, int fd);
+int     get_next_line(int fd, char **line);
+
 
 typedef struct s_map
 {
@@ -38,3 +58,31 @@ typedef struct s_data
     int         tex_count;   // 已解析的纹理数量
     int         color_count; // 已解析的颜色数量
 }   t_data;
+
+//validate function
+int     validate_data(t_data *data);
+int     find_player_position(t_data *data);
+int     validate_map_characters(t_data *data);
+int     check_map_walls(t_data *data);
+int     flood_fill(char **map, char **visited, int x, int y, int width, int height);
+
+//utils
+int     is_empty_line(char *line);
+int     check_file_extension(char *filename, char *ext);
+void    free_split(char **split);
+
+/*utils array*/
+char **create_visited_array(int height, int width);
+void free_visited_array(char **visited, int height);
+
+// error
+int     error_msg(char *msg);
+int     error_msg_prefix(char *prefix, char *msg);
+void    exit_error(char *msg);
+
+// init and free
+void    init_data(t_data *data);
+void    free_data(t_data *data);
+
+
+#endif

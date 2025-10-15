@@ -23,10 +23,18 @@ int check_file_extension(char *filename, char *ext)
     return (ft_strncmp(filename + len - ext_len, ext, ext_len) == 0);
 }
 
-int error_msg(char *msg)
+void free_split(char **split)
 {
-    ft_putstr_fd("Error\n", 2);
-    ft_putstr_fd(msg, 2);
-    ft_putstr_fd("\n", 2);
-    return (0);
+    int i;
+    
+    if (!split)
+        return;
+    
+    i = 0;
+    while (split[i])
+    {
+        free(split[i]);
+        i++;
+    }
+    free(split);
 }

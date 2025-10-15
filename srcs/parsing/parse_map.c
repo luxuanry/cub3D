@@ -29,7 +29,6 @@ int parse_file(char *filename, t_data *data)
         }
         free(line);
     }
-    
     close(fd);
     
     // 5. 验证所有信息是否完整
@@ -38,8 +37,6 @@ int parse_file(char *filename, t_data *data)
     
     return (1);
 }
-
-// srcs/parsing/parse_map.c
 
 int parse_map_line(char *line, t_data *data)
 {
@@ -50,6 +47,5 @@ int parse_map_line(char *line, t_data *data)
     // 添加这行到地图
     if (!add_map_line(line, data))
         return (0);
-    
     return (1);
 }

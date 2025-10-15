@@ -94,3 +94,39 @@ int check_map_walls(t_data *data)
     free_visited_array(visited, data->map.height);
     return (result);
 }
+
+int flood_fill_simple(char **map, char **visited, int x, int y, 
+                      int width, int height, int depth)
+{
+    // 防止栈溢出
+    if (depth > 10000)
+        return (1);
+    // 越界检查
+    if (y < 0 || y >= height || x < 0)
+        return (0);
+    // 检查行长度
+    int row_len = ft_strlen(map[y]);
+    if (x >= row_len)
+        return (0);
+    // 空格是漏洞
+    if (map[y][x] == ' ')
+        return (0);
+    // 墙，停止
+    if (map[y][x] == '1')
+        return (1);
+    // 已访问
+    if (visited[y][x])
+        return (1);
+    // 标记
+    visited[y][x] = 1;
+    // 四个方向
+    if (!flood_fill_simple(map, visited, x, y - 1, width, height, depth + 1))
+        return (0);
+    if (!flood_fill_simple(map, visited, x, y + 1, width, height, depth + 1))
+        return (0);
+    if (!flood_fill_simple(map, visited, x - 1, y, width, height, depth + 1))
+        return (0);
+    if (!flood_fill_simple(map, visited, x + 1, y, width, height, depth + 1))
+        return (0);
+    return (1);
+}
