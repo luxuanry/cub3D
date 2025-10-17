@@ -13,25 +13,76 @@
  * Uses flood fill algorithm to check if player area is surrounded by walls.
  * Returns 1 if valid (enclosed), 0 if invalid (has leaks).
  */
+// int flood_fill(char **map, char **visited, int x, int y, int width, int height)
+// {
+//     int row_len;
+    
+//     // Out of bounds check
+//     if (y < 0 || y >= height || x < 0)
+//         return (0);
+    
+//     // Check if x is beyond current row length
+//     row_len = ft_strlen(map[y]);
+//     if (x >= row_len)
+//         return (0);
+    
+//     // Space or edge means leak
+//     if (map[y][x] == ' ')
+//         return (0);
+    
+//     // Wall - stop here
+//     if (map[y][x] == '1')
+//         return (1);
+    
+//     // Already visited
+//     if (visited[y][x])
+//         return (1);
+    
+//     // Mark as visited
+//     visited[y][x] = 1;
+    
+//     // Check all 4 directions
+//     if (!flood_fill(map, visited, x, y - 1, width, height))
+//         return (0);
+//     if (!flood_fill(map, visited, x, y + 1, width, height))
+//         return (0);
+//     if (!flood_fill(map, visited, x - 1, y, width, height))
+//         return (0);
+//     if (!flood_fill(map, visited, x + 1, y, width, height))
+//         return (0);
+    
+//     return (1);
+// }
+
 int flood_fill(char **map, char **visited, int x, int y, int width, int height)
 {
     int row_len;
     
     // Out of bounds check
-    if (y < 0 || y >= height || x < 0)
-        return (0);
+    if (y < 0 || y >= height || x < 0 || x >= width)
+        return (1);  // Out of map bounds = treat as wall
     
-    // Check if x is beyond current row length
+    // Safety check - make sure row exists
+    if (!map[y])
+        return (1);
+    
+    // Check current row length
     row_len = ft_strlen(map[y]);
-    if (x >= row_len)
-        return (0);
     
-    // Space or edge means leak
+    // If x is beyond this row's length, treat as wall (space)
+    if (x >= row_len)
+        return (1);
+    
+    // Space is treated as wall
     if (map[y][x] == ' ')
-        return (0);
+        return (1);
     
     // Wall - stop here
     if (map[y][x] == '1')
+        return (1);
+    
+    // Safety check for visited array
+    if (!visited[y])
         return (1);
     
     // Already visited
@@ -41,7 +92,7 @@ int flood_fill(char **map, char **visited, int x, int y, int width, int height)
     // Mark as visited
     visited[y][x] = 1;
     
-    // Check all 4 directions
+    // Check all 4 directions recursively
     if (!flood_fill(map, visited, x, y - 1, width, height))
         return (0);
     if (!flood_fill(map, visited, x, y + 1, width, height))
@@ -53,6 +104,7 @@ int flood_fill(char **map, char **visited, int x, int y, int width, int height)
     
     return (1);
 }
+
 int validate_data(t_data *data)
 {
     // 1. Check textures and colors

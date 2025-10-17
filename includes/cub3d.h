@@ -185,7 +185,8 @@ void        cast_rays(t_game *game);
 void        calculate_ray_direction(t_player *player, int x, 
                                    double *rayDirX, double *rayDirY);
 void        init_dda(t_ray *ray, double posX, double posY);
-void        perform_dda(t_ray *ray, char **map);
+//void        perform_dda(t_ray *ray, char **map);
+void        perform_dda(t_ray *ray, char **map, int height);
 void        calculate_wall_distance(t_ray *ray, double posX, double posY);
 void        calculate_wall_height(t_ray *ray);
 

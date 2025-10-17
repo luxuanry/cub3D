@@ -7,6 +7,38 @@
  * Casts one ray per screen column to create the 3D view.
  * This is the core of the raycasting algorithm.
  */
+// void cast_rays(t_game *game)
+// {
+//     t_ray ray;
+//     int x;
+    
+//     // Cast one ray for each vertical stripe of the screen
+//     x = 0;
+//     while (x < SCREEN_WIDTH)
+//     {
+//         // 1. Calculate ray direction for this screen column
+//         calculate_ray_direction(&game->player, x, 
+//                                &ray.rayDirX, &ray.rayDirY);
+        
+//         // 2. Initialize DDA algorithm variables
+//         init_dda(&ray, game->player.posX, game->player.posY);
+        
+//         // 3. Perform DDA to find wall intersection
+//         perform_dda(&ray, game->data.map.grid);
+        
+//         // 4. Calculate perpendicular distance to wall
+//         calculate_wall_distance(&ray, game->player.posX, game->player.posY);
+        
+//         // 5. Calculate wall height on screen
+//         calculate_wall_height(&ray);
+        
+//         // 6. Draw the wall stripe with texture
+//         draw_textured_wall(game, &ray, x);
+        
+//         x++;
+//     }
+// }
+
 void cast_rays(t_game *game)
 {
     t_ray ray;
@@ -23,8 +55,9 @@ void cast_rays(t_game *game)
         // 2. Initialize DDA algorithm variables
         init_dda(&ray, game->player.posX, game->player.posY);
         
-        // 3. Perform DDA to find wall intersection
-        perform_dda(&ray, game->data.map.grid);
+        // 3. Perform DDA to find wall intersection (UPDATED - add height and width)
+        perform_dda(&ray, game->data.map.grid, 
+                    game->data.map.height, game->data.map.width);
         
         // 4. Calculate perpendicular distance to wall
         calculate_wall_distance(&ray, game->player.posX, game->player.posY);
@@ -38,7 +71,6 @@ void cast_rays(t_game *game)
         x++;
     }
 }
-
 /*
  * calculate_ray_direction - Calculate the ray direction for a given screen column
  * @player: Player structure containing position and direction

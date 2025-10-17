@@ -13,7 +13,7 @@ void rotate_left(t_game *game)
     double oldPlaneX;
     double rotSpeed;
     
-    rotSpeed = game->player.rotSpeed;
+    rotSpeed = -game->player.rotSpeed;  // CHANGED: Negative for left
     
     // Rotate direction vector
     oldDirX = game->player.dirX;
@@ -35,7 +35,7 @@ void rotate_left(t_game *game)
  * @game: Main game structure
  * 
  * Rotates both the direction vector and camera plane to the right.
- * Uses rotation matrix with negative angle.
+ * Uses rotation matrix with positive angle.
  */
 void rotate_right(t_game *game)
 {
@@ -43,7 +43,7 @@ void rotate_right(t_game *game)
     double oldPlaneX;
     double rotSpeed;
     
-    rotSpeed = -game->player.rotSpeed; // Negative for right rotation
+    rotSpeed = game->player.rotSpeed;  // CHANGED: Positive for right
     
     // Rotate direction vector
     oldDirX = game->player.dirX;
