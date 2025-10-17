@@ -1,51 +1,117 @@
-#include "includes/cub3d.h"
+#include "../../includes/cub3d.h"
 
-
-int parse_file(char *filename, t_data *data)
+/*
+ * add_map_line - Add a line to the map grid
+ * @line: Line to add
+ * @data: Main data structure
+ * 
+ * Reallocates the map grid and adds the new line.
+ * Returns 1 on success, 0 on failure.
+ */
+int add_map_line(char *line, t_data *data)
 {
-    int     fd;
-    char    *line;
+    char **new_grid;
+    int i;
+    int len;
     
-    // 1. 检查文件扩展名
-    if (!check_file_extension(filename, ".cub"))
-        return (error_msg("file must be .cub format"));
+    // Remove trailing newline
+    len = ft_strlen(line);
+    if (len > 0 && line[len - 1] == '\n')
+        line[len - 1] = '\0';
     
-    // 2. 打开文件
-    fd = open(filename, O_RDONLY);
-    if (fd < 0)
-        return (error_msg("can not open file"));
+    // Allocate new grid with one more line
+    new_grid = malloc(sizeof(char *) * (data->map.height + 1));
+    if (!new_grid)
+        return (error_msg("Memory allocation failed"));
     
-    // 3. 初始化数据
-    init_data(data);
-    
-    // 4. 逐行读取
-    while (get_next_line(fd, &line) > 0)
+    // Copy existing lines
+    i = 0;
+    while (i < data->map.height)
     {
-        if (!parse_line(line, data))
-        {
-            free(line);
-            close(fd);
-            return (0);
-        }
-        free(line);
+        new_grid[i] = data->map.grid[i];
+        i++;
     }
-    close(fd);
     
-    // 5. 验证所有信息是否完整
-    if (!validate_data(data))
+    // Add new line
+    new_grid[i] = ft_strdup(line);
+    if (!new_grid[i])
+    {
+        free(new_grid);
+        return (error_msg("Memory allocation failed"));
+    }
+    
+    // Update width (take maximum width)
+    len = ft_strlen(line);
+    if (len > data->map.width)
+        data->map.width = len;
+    
+    // Free old grid pointer (not the strings, they were copied)
+    if (data->map.grid)
+        free(data->map.grid);
+    
+    // Update map
+    data->map.grid = new_grid;
+    data->map.height++;
+    
+    return (1);
+}
+
+/*
+ * parse_map_line - Parse a map line
+ * @line: Line to parse
+ * @data: Main data structure
+ */
+int parse_map_line(char *line, t_data *data)
+{
+    // Check if textures and colors are set
+    if (data->tex_count != 4 || data->color_count != 3)
+        return (error_msg("Map must come after textures and colors"));
+    
+    // Add line to map
+    if (!add_map_line(line, data))
         return (0);
     
     return (1);
 }
 
-int parse_map_line(char *line, t_data *data)
+int parse_file(char *filename, t_data *data)
 {
-    // 检查纹理和颜色是否都已设置
-    if (data->tex_count != 4 || data->color_count != 3)
-        return (error_msg("Map must come after textures and colors"));
+    int fd;
+    char *line;
     
-    // 添加这行到地图
-    if (!add_map_line(line, data))
+    // Check file extension
+    if (!check_file_extension(filename, ".cub"))
+        return (error_msg("file must be .cub format"));
+    
+    // Open file
+    fd = open(filename, O_RDONLY);
+    if (fd < 0)
+        return (error_msg("can not open file"));
+    
+    // Initialize data
+    init_data(data);
+    
+    // Read line by line
+    line = get_next_line(fd);
+    while (line != NULL)
+    {
+        if (!parse_line(line, data))
+        {
+            free(line);
+            close(fd);
+            get_next_line(-1); // Clean up GNL static buffer
+            return (0);
+        }
+        free(line);
+        line = get_next_line(fd);
+    }
+    
+    close(fd);
+    get_next_line(-1); // Clean up GNL static buffer
+    
+    // Validate all information
+    if (!validate_data(data))
         return (0);
+    
     return (1);
 }

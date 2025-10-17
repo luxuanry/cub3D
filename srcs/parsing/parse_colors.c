@@ -1,4 +1,4 @@
-#include "includes/cub3d.h"
+#include "../../includes/cub3d.h"
 
 int parse_color(char *color_str, t_colors *colors, char type, t_data *data)
 {

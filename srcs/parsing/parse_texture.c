@@ -1,4 +1,4 @@
-#include "includes/cub3d.h"
+#include "../../includes/cub3d.h"
 
 
 int parse_texture(char *path, char **texture_ptr, t_data *data)

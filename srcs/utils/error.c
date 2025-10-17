@@ -1,4 +1,4 @@
-#include "includes/cub3d.h"
+#include "../../includes/cub3d.h"
 
 int error_msg(char *msg)
 {

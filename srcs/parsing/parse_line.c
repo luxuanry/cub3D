@@ -1,4 +1,4 @@
-#include "includes/cub3d.h"
+#include "../../includes/cub3d.h"
 
 int parse_line(char *line, t_data *data)
 {

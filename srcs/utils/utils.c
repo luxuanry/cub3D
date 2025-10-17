@@ -1,3 +1,5 @@
+#include "../../includes/cub3d.h"
+
 int is_empty_line(char *line)
 {
     while (*line)

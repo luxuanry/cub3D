@@ -1,4 +1,4 @@
-#include"includes/cub3d.h"
+#include "../../includes/cub3d.h"
 
 static char *create_visited_row(int width)
 {
