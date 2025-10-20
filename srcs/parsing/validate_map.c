@@ -150,6 +150,102 @@ int flood_fill(char **map, char **visited, int x, int y, int width, int height)
     return (1);
 }
 
+// int validate_data(t_data *data)
+// {
+//     if (data->tex_count != 4)
+//         return (error_msg("Missing texture definition"));
+//     if (data->color_count != 3)
+//         return (error_msg("Missing color definition"));
+//     if (data->map.height == 0)
+// 		return (error_msg("No map found"));
+// 	if (!validate_map_characters(data))
+// 		return (0);
+//     if (!find_player_position(data))
+//         return (error_msg("Player not found or multiple players"));
+//     if (!check_map_walls(data))
+//         return (0);
+//     return (1);
+// }
+
+
+// int validate_map_characters(t_data *data)
+// {
+//     int y, x;
+    
+//     y = 0;
+//     while (y < data->map.height)
+//     {
+//         x = 0;
+//         while (data->map.grid[y][x])
+//         {
+//             if (data->map.grid[y][x] != '0' && 
+//                 data->map.grid[y][x] != '1' &&
+//                 data->map.grid[y][x] != ' ')
+//             {
+//                 // printf("DEBUG: Invalid character '%c' (ASCII %d) at row %d, col %d\n", 
+//                 //        data->map.grid[y][x], (int)data->map.grid[y][x], y, x);
+//                 return (error_msg("Map contains invalid character"));
+//             }
+//             x++;
+//         }
+//         y++;
+//     }
+//     return (1);
+// }
+
+// Function 1: Check characters INCLUDING player characters
+int validate_map_characters_with_player(t_data *data)
+{
+    int y, x;
+    
+    y = 0;
+    while (y < data->map.height)
+    {
+        x = 0;
+        while (data->map.grid[y][x])
+        {
+            if (data->map.grid[y][x] != '0' && 
+                data->map.grid[y][x] != '1' &&
+                data->map.grid[y][x] != ' ' &&
+                data->map.grid[y][x] != 'N' &&
+                data->map.grid[y][x] != 'S' &&
+                data->map.grid[y][x] != 'E' &&
+                data->map.grid[y][x] != 'W')
+            {
+                return (error_msg("Map contains invalid character"));
+            }
+            x++;
+        }
+        y++;
+    }
+    return (1);
+}
+
+// Function 2: Check characters AFTER player is replaced
+int validate_map_characters(t_data *data)
+{
+    int y, x;
+    
+    y = 0;
+    while (y < data->map.height)
+    {
+        x = 0;
+        while (data->map.grid[y][x])
+        {
+            if (data->map.grid[y][x] != '0' &&
+                data->map.grid[y][x] != '1' &&
+                data->map.grid[y][x] != ' ')
+            {
+                return (error_msg("Map contains invalid character"));
+            }
+            x++;
+        }
+        y++;
+    }
+    return (1);
+}
+
+// Validation function uses BOTH
 int validate_data(t_data *data)
 {
     // 1. Check textures and colors
@@ -162,43 +258,22 @@ int validate_data(t_data *data)
     if (data->map.height == 0)
         return (error_msg("No map found"));
     
-    // 3. Find player FIRST - this replaces N/S/E/W with '0'
+    // 3. Validate characters WITH player (allows N/S/E/W)
+    if (!validate_map_characters_with_player(data))
+        return (0);
+    
+    // 4. Find player - this replaces N/S/E/W with '0'
     if (!find_player_position(data))
         return (error_msg("Player not found or multiple players"));
     
-    // 4. THEN validate characters (after N is replaced with 0)
+    // 5. Validate characters again WITHOUT player (only 0/1/space)
     if (!validate_map_characters(data))
         return (0);
     
-    // 5. Check walls
+    // 6. Check walls
     if (!check_map_walls(data))
         return (0);
     
-    return (1);
-}
-
-int validate_map_characters(t_data *data)
-{
-    int y, x;
-    
-    y = 0;
-    while (y < data->map.height)
-    {
-        x = 0;
-        while (data->map.grid[y][x])
-        {
-            if (data->map.grid[y][x] != '0' && 
-                data->map.grid[y][x] != '1' &&
-                data->map.grid[y][x] != ' ')
-            {
-                // printf("DEBUG: Invalid character '%c' (ASCII %d) at row %d, col %d\n", 
-                //        data->map.grid[y][x], (int)data->map.grid[y][x], y, x);
-                return (error_msg("Map contains invalid character"));
-            }
-            x++;
-        }
-        y++;
-    }
     return (1);
 }
 

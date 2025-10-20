@@ -74,10 +74,55 @@ int parse_map_line(char *line, t_data *data)
     return (1);
 }
 
+// int parse_file(char *filename, t_data *data)
+// {
+//     int fd;
+//     char *line;
+    
+//     // Check file extension
+//     if (!check_file_extension(filename, ".cub"))
+//         return (error_msg("file must be .cub format"));
+    
+//     // Open file
+//     fd = open(filename, O_RDONLY);
+//     if (fd < 0)
+//         return (error_msg("can not open file"));
+    
+//     // Initialize data
+//     init_data(data);
+    
+//     // Read line by line
+//     line = get_next_line(fd);
+//     while (line != NULL)
+//     {
+//         if (!parse_line(line, data))
+//         {
+//             free(line);
+//             close(fd);
+//             get_next_line(-1); // Clean up GNL static buffer
+//             return (0);
+//         }
+//         free(line);
+//         line = get_next_line(fd);
+//     }
+    
+//     close(fd);
+//     get_next_line(-1); // Clean up GNL static buffer
+    
+//     // Validate all information
+//     if (!validate_data(data))
+//         return (0);
+    
+//     return (1);
+// }
+
 int parse_file(char *filename, t_data *data)
 {
     int fd;
     char *line;
+    
+    // Initialize data FIRST (before any checks that might fail)
+    init_data(data);
     
     // Check file extension
     if (!check_file_extension(filename, ".cub"))
@@ -86,10 +131,7 @@ int parse_file(char *filename, t_data *data)
     // Open file
     fd = open(filename, O_RDONLY);
     if (fd < 0)
-        return (error_msg("can not open file"));
-    
-    // Initialize data
-    init_data(data);
+        return (error_msg("cannot open file"));
     
     // Read line by line
     line = get_next_line(fd);

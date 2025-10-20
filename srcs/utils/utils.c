@@ -16,6 +16,10 @@ int check_file_extension(char *filename, char *ext)
     int len;
     int ext_len;
     
+    // Add NULL checks
+    if (!filename || !ext)
+        return (0);
+    
     len = ft_strlen(filename);
     ext_len = ft_strlen(ext);
     
