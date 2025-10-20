@@ -1,5 +1,26 @@
 #include "../../includes/cub3d.h"
 
+// void clear_image(t_game *game)
+// {
+//     int i;
+//     int total_pixels;
+//     int *buffer;
+//     int ceiling_color;
+    
+//     // Use ceiling color instead of black
+//     ceiling_color = (game->data.colors.ceiling_r << 16) |
+//                     (game->data.colors.ceiling_g << 8) |
+//                     game->data.colors.ceiling_b;
+    
+//     buffer = (int *)game->img.addr;
+//     total_pixels = SCREEN_WIDTH * SCREEN_HEIGHT;
+//     i = 0;
+//     while (i < total_pixels)
+//     {
+//         buffer[i] = ceiling_color;  // Use actual ceiling color
+//         i++;
+//     }
+// }
 /*
  * render_frame - Render a complete frame
  * @game: Main game structure
@@ -8,6 +29,7 @@
  */
 void render_frame(t_game *game)
 {
+	//clear_image(game);
     // 1. Draw floor and ceiling
     draw_floor_ceiling(game);
     

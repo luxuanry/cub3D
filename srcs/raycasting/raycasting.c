@@ -57,7 +57,7 @@ void cast_rays(t_game *game)
         
         // 3. Perform DDA to find wall intersection (UPDATED - add height and width)
         perform_dda(&ray, game->data.map.grid, 
-                    game->data.map.height, game->data.map.width);
+                    game->data.map.height);
         
         // 4. Calculate perpendicular distance to wall
         calculate_wall_distance(&ray, game->player.posX, game->player.posY);

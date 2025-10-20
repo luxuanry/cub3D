@@ -31,7 +31,7 @@ int handle_keypress(int keycode, t_game *game)
         rotate_right(game);
     
     // Render frame after any input
-    render_frame(game);
+    //render_frame(game);
     
     return (0);
 }
