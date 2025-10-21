@@ -1,6 +1,6 @@
 #include "../../includes/cub3d.h"
 
-int handle_keypress(int keycode, t_game *game)
+int	handle_keypress(int keycode, t_game *game)
 {
 	if (keycode == KEY_ESC)
 		close_game(game);
@@ -21,11 +21,8 @@ int handle_keypress(int keycode, t_game *game)
 
 void	setup_hooks(t_game *game)
 {
-	mlx_hook(game->win, 2, 1L<<0, handle_keypress, game);
-	
-	// Mouse movement hook (optional)
-	// mlx_hook(game->win, 6, 1L<<6, mouse_rotate, game);
-	
+	mlx_hook(game->win, 2, 1L << 0, handle_keypress, game);
+	mlx_hook(game->win, 6, 1L << 6, mouse_rotate, game);
 	mlx_hook(game->win, 17, 0, close_game, game);
 	mlx_loop_hook(game->mlx, game_loop, game);
 }

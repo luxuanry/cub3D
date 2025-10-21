@@ -1,32 +1,30 @@
 #include "../../includes/cub3d.h"
 
-/*
- * mouse_rotate - Rotate view based on mouse movement
- * @x: Current mouse X position
- * @y: Current mouse Y position (unused but required by MLX)
- * @game: Main game structure
- * 
- * Rotates the player's view based on horizontal mouse movement.
- * The rotation speed is proportional to mouse distance from center.
- */
-int mouse_rotate(int x, int y, t_game *game)
+int	mouse_rotate(int x, int y, t_game *game)
 {
 	double rotation;
 	double oldDirX;
 	double oldPlaneX;
-	int center_x;
+	static int last_x = -1;
+	static int init = 0;
 	
-	(void)y; // Unused parameter
+	(void)y;
 	
-	center_x = SCREEN_WIDTH / 2;
+	// Initialize last_x on first call
+	if (!init)
+	{
+		last_x = x;
+		init = 1;
+		return (0);
+	}
 	
-	// Calculate rotation based on distance from screen center
-	// Positive = mouse right of center = rotate right
-	// Negative = mouse left of center = rotate left
-	rotation = (x - center_x) * 0.001; // Sensitivity factor
+	// Calculate rotation based on mouse movement delta
+	// Using the difference from last position for smoother control
+	// Negative to invert direction: mouse right = rotate right
+	rotation = -(x - last_x) * 0.0005; // Lower sensitivity (was 0.001-0.002)
 	
-	// Only rotate if mouse moved significantly from center
-	if (rotation > 0.001 || rotation < -0.001)
+	// Only rotate if mouse moved
+	if (rotation > 0.00001 || rotation < -0.00001)
 	{
 		// Rotate direction vector
 		oldDirX = game->player.dirX;
@@ -41,10 +39,14 @@ int mouse_rotate(int x, int y, t_game *game)
 							  game->player.planeY * sin(rotation);
 		game->player.planeY = oldPlaneX * sin(rotation) + 
 							  game->player.planeY * cos(rotation);
-		
-		// Re-center mouse (optional, for FPS-style mouse look)
-		// mlx_mouse_move(game->mlx, game->win, center_x, SCREEN_HEIGHT / 2);
 	}
+	
+	last_x = x;
+	
+	// FPS-style mouse re-centering for continuous rotation
+	// Re-center mouse after each movement so you can rotate infinitely
+	mlx_mouse_move(game->mlx, game->win, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
+	last_x = SCREEN_WIDTH / 2; // Reset last_x to center after re-centering
 	
 	return (0);
 }
