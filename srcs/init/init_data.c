@@ -24,8 +24,8 @@ void	init_data(t_data *data)
 
 void	free_data(t_data *data)
 {
-	int i;
-	
+	int	i;
+
 	if (data->textures.north)
 		free(data->textures.north);
 	if (data->textures.south)

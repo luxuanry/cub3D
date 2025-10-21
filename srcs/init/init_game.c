@@ -1,6 +1,6 @@
 #include "../../includes/cub3d.h"
 
-int init_game(t_game *game, char *filename)
+int	init_game(t_game *game, char *filename)
 {
 	if (!parse_file(filename, &game->data))
 	{

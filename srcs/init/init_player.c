@@ -8,7 +8,7 @@ static void	set_player_direction_north(t_player *player)
 	player->planeY = 0;
 }
 
-static void set_player_direction_south(t_player *player)
+static void	set_player_direction_south(t_player *player)
 {
 	player->dirX = 0;
 	player->dirY = 1;
@@ -16,7 +16,7 @@ static void set_player_direction_south(t_player *player)
 	player->planeY = 0;
 }
 
-static void set_player_direction_east(t_player *player)
+static void	set_player_direction_east(t_player *player)
 {
 	player->dirX = 1;
 	player->dirY = 0;
@@ -24,7 +24,7 @@ static void set_player_direction_east(t_player *player)
 	player->planeY = 0.66;
 }
 
-static void set_player_direction_west(t_player *player)
+static void	set_player_direction_west(t_player *player)
 {
 	player->dirX = -1;
 	player->dirY = 0;
@@ -32,7 +32,7 @@ static void set_player_direction_west(t_player *player)
 	player->planeY = -0.66;
 }
 
-void init_player(t_game *game)
+void	init_player(t_game *game)
 {
 	game->player.posX = game->data.map.player_x + 0.5;
 	game->player.posY = game->data.map.player_y + 0.5;
