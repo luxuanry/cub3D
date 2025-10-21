@@ -1,9 +1,9 @@
 #include "../../includes/cub3d.h"
 
-int parse_line(char *line, t_data *data)
+int	parse_line(char *line, t_data *data)
 {
-	char *trimmed;
-	
+	char	*trimmed;
+
 	if (is_empty_line(line))
 		return (1);
 	trimmed = line;

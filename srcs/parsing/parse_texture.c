@@ -1,10 +1,9 @@
 #include "../../includes/cub3d.h"
 
-
-int parse_texture(char *path, char **texture_ptr, t_data *data)
+int	parse_texture(char *path, char **texture_ptr, t_data *data)
 {
-	int     fd;
-	char    *trimmed;
+	int		fd;
+	char	*trimmed;
 
 	if (*texture_ptr != NULL)
 		return (error_msg("Duplicate texture definition"));
@@ -21,7 +20,6 @@ int parse_texture(char *path, char **texture_ptr, t_data *data)
 		free(trimmed);
 		return (error_msg("Texture must be .xpm format"));
 	}
-	
 	*texture_ptr = trimmed;
 	data->tex_count++;
 	return (1);
