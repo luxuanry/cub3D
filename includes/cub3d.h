@@ -158,6 +158,7 @@ int         parse_color(char *color_str, t_colors *colors,
                        char type, t_data *data);
 int         parse_texture(char *path, char **texture_ptr, t_data *data);
 int         parse_map_line(char *line, t_data *data);
+int			validate_map_connected(t_data *data);
 
 // Utils functions (utils/)
 int         is_empty_line(char *line);

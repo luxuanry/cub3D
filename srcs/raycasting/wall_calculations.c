@@ -11,13 +11,13 @@
  */
 void calculate_wall_distance(t_ray *ray, double posX, double posY)
 {
-    // Calculate perpendicular distance to avoid fisheye effect
-    if (ray->side == 0)
-        ray->perpWallDist = (ray->mapX - posX + 
-                            (1 - ray->stepX) / 2) / ray->rayDirX;
-    else
-        ray->perpWallDist = (ray->mapY - posY + 
-                            (1 - ray->stepY) / 2) / ray->rayDirY;
+	// Calculate perpendicular distance to avoid fisheye effect
+	if (ray->side == 0)
+		ray->perpWallDist = (ray->mapX - posX + 
+							(1 - ray->stepX) / 2) / ray->rayDirX;
+	else
+		ray->perpWallDist = (ray->mapY - posY + 
+							(1 - ray->stepY) / 2) / ray->rayDirY;
 }
 
 /*
@@ -29,15 +29,15 @@ void calculate_wall_distance(t_ray *ray, double posX, double posY)
  */
 void calculate_wall_height(t_ray *ray)
 {
-    // Calculate height of line to draw on screen
-    ray->lineHeight = (int)(SCREEN_HEIGHT / ray->perpWallDist);
-    
-    // Calculate lowest and highest pixel to fill in current stripe
-    ray->drawStart = -ray->lineHeight / 2 + SCREEN_HEIGHT / 2;
-    if (ray->drawStart < 0)
-        ray->drawStart = 0;
-    
-    ray->drawEnd = ray->lineHeight / 2 + SCREEN_HEIGHT / 2;
-    if (ray->drawEnd >= SCREEN_HEIGHT)
-        ray->drawEnd = SCREEN_HEIGHT - 1;
+	// Calculate height of line to draw on screen
+	ray->lineHeight = (int)(SCREEN_HEIGHT / ray->perpWallDist);
+	
+	// Calculate lowest and highest pixel to fill in current stripe
+	ray->drawStart = -ray->lineHeight / 2 + SCREEN_HEIGHT / 2;
+	if (ray->drawStart < 0)
+		ray->drawStart = 0;
+	
+	ray->drawEnd = ray->lineHeight / 2 + SCREEN_HEIGHT / 2;
+	if (ray->drawEnd >= SCREEN_HEIGHT)
+		ray->drawEnd = SCREEN_HEIGHT - 1;
 }
