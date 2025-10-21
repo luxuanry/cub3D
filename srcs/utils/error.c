@@ -1,6 +1,6 @@
 #include "../../includes/cub3d.h"
 
-int error_msg(char *msg)
+int	error_msg(char *msg)
 {
 	ft_putstr_fd("Error\n", 2);
 	if (msg)
@@ -11,8 +11,7 @@ int error_msg(char *msg)
 	return (0);
 }
 
-
-int error_msg_prefix(char *prefix, char *msg)
+int	error_msg_prefix(char *prefix, char *msg)
 {
 	ft_putstr_fd("Error\n", 2);
 	if (prefix)
@@ -26,7 +25,7 @@ int error_msg_prefix(char *prefix, char *msg)
 	return (0);
 }
 
-void exit_error(char *msg)
+void	exit_error(char *msg)
 {
 	error_msg(msg);
 	exit(1);

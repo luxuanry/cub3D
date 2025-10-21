@@ -22,9 +22,9 @@ char	**create_visited_array(int height, int width)
 {
 	char	**visited;
 	int		i;
-	
+
 	if (height <= 0 || width <= 0)
-		return (NULL);	
+		return (NULL);
 	visited = malloc(sizeof(char *) * (height + 1));
 	if (!visited)
 		return (NULL);
@@ -46,9 +46,9 @@ char	**create_visited_array(int height, int width)
 void	free_visited_array(char **visited, int height)
 {
 	int	i;
-	
+
 	if (!visited)
-		return;
+		return ;
 	i = 0;
 	while (i < height)
 	{

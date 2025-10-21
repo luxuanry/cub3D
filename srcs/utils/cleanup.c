@@ -1,6 +1,6 @@
 #include "../../includes/cub3d.h"
 
-int close_game(t_game *game)
+int	close_game(t_game *game)
 {
 	free_textures(game);
 	if (game->img.img)
@@ -12,7 +12,7 @@ int close_game(t_game *game)
 	return (0);
 }
 
-int game_loop(t_game *game)
+int	game_loop(t_game *game)
 {
 	render_frame(game);
 	return (0);

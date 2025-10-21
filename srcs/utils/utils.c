@@ -1,6 +1,6 @@
 #include "../../includes/cub3d.h"
 
-int is_empty_line(char *line)
+int	is_empty_line(char *line)
 {
 	while (*line)
 	{
@@ -11,11 +11,11 @@ int is_empty_line(char *line)
 	return (1);
 }
 
-int check_file_extension(char *filename, char *ext)
+int	check_file_extension(char *filename, char *ext)
 {
 	int	len;
 	int	ext_len;
-	
+
 	if (!filename || !ext)
 		return (0);
 	len = ft_strlen(filename);
@@ -25,13 +25,12 @@ int check_file_extension(char *filename, char *ext)
 	return (ft_strncmp(filename + len - ext_len, ext, ext_len) == 0);
 }
 
-void free_split(char **split)
+void	free_split(char **split)
 {
-	int i;
-	
+	int	i;
+
 	if (!split)
-		return;
-	
+		return ;
 	i = 0;
 	while (split[i])
 	{
