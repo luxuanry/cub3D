@@ -1,7 +1,7 @@
 NAME = cub3D
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -I./includes -I./libft -I./gnl -I./mlx
+CFLAGS = -Wall -Wextra -Werror -g3 -I./includes -I./libft -I./gnl -I./mlx
 MLX_DIR = mlx
 MLX = $(MLX_DIR)/libmlx.a
 MLXFLAGS = -L$(MLX_DIR) -lmlx -lXext -lX11 -lm -lz
@@ -31,7 +31,9 @@ SRCS = srcs/main.c \
        srcs/parsing/parse_line.c \
        srcs/parsing/parse_map.c \
        srcs/parsing/parse_texture.c \
-       srcs/parsing/validate_map.c \
+       srcs/parsing/validation_flood.c \
+	   srcs/parsing/validation_walls.c \
+	   srcs/parsing/validation_utils.c \
        srcs/raycasting/raycasting.c \
        srcs/raycasting/dda.c \
        srcs/raycasting/wall_calculations.c \
