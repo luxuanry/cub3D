@@ -48,22 +48,8 @@ int	add_map_line(char *line, t_data *data)
 // 	return (1);
 // }
 
-int parse_map_line(char *line, t_data *data)
+int	parse_map_line(char *line, t_data *data)
 {
-	if (data->tex_count != 4)
-	{
-		if (data->tex_count < 4)
-			return (error_msg("Missing texture(s) - need NO, SO, WE, EA"));
-		else
-			return (error_msg("Duplicate texture definition"));
-	}
-	if (data->color_count != 3)
-	{
-		if ((data->color_count & 1) == 0)
-			return (error_msg("Missing floor color (F)"));
-		if ((data->color_count & 2) == 0)
-			return (error_msg("Missing ceiling color (C)"));
-	}
 	if (!add_map_line(line, data))
 		return (0);
 	return (1);

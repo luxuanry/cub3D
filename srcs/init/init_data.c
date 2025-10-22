@@ -32,6 +32,7 @@ void	init_data(t_data *data)
 	data->colors.ceiling_r = 0;
 	data->colors.ceiling_g = 0;
 	data->colors.ceiling_b = 0;
+	data->map_started = 0;
 }
 
 void	free_data(t_data *data)
