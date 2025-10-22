@@ -79,6 +79,7 @@ typedef struct s_data
 	t_colors	colors;
 	int			tex_count;
 	int			color_count;
+	int			map_started;
 }	t_data;
 
 // Player structure for raycasting
