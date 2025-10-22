@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dda.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: r <rxue@student.42.fr>                     +#+  +:+       +#+        */
+/*   By: lcao <lcao@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 12:52:47 by r                 #+#    #+#             */
-/*   Updated: 2025/10/22 12:52:49 by r                ###   ########.fr       */
+/*   Updated: 2025/10/22 15:12:23 by lcao             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,8 @@ static int	is_wall_hit(t_ray *ray, char **map, int height)
 	row_len = ft_strlen(map[ray->map_y]);
 	if (ray->map_x >= row_len)
 		return (1);
-	if (map[ray->map_y][ray->map_x] == '1' || map[ray->map_y][ray->map_x] == ' ')
+	if (map[ray->map_y][ray->map_x] == '1'
+		|| map[ray->map_y][ray->map_x] == ' ')
 		return (1);
 	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   keyboard.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: r <rxue@student.42.fr>                     +#+  +:+       +#+        */
+/*   By: lcao <lcao@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 12:57:02 by r                 #+#    #+#             */
-/*   Updated: 2025/10/22 12:57:08 by r                ###   ########.fr       */
+/*   Updated: 2025/10/22 15:13:47 by lcao             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,10 @@ void	move_left(t_game *game)
 	double	move_x;
 	double	move_y;
 
-	move_x = game->player.pos_x - game->player.plane_x * game->player.move_speed;
-	move_y = game->player.pos_y - game->player.plane_y * game->player.move_speed;
+	move_x = game->player.pos_x
+		- game->player.plane_x * game->player.move_speed;
+	move_y = game->player.pos_y
+		- game->player.plane_y * game->player.move_speed;
 	if (game->data.map.grid[(int)move_y][(int)move_x] == '0')
 	{
 		game->player.pos_x = move_x;
@@ -59,8 +61,10 @@ void	move_right(t_game *game)
 	double	move_x;
 	double	move_y;
 
-	move_x = game->player.pos_x + game->player.plane_x * game->player.move_speed;
-	move_y = game->player.pos_y + game->player.plane_y * game->player.move_speed;
+	move_x = game->player.pos_x
+		+ game->player.plane_x * game->player.move_speed;
+	move_y = game->player.pos_y
+		+ game->player.plane_y * game->player.move_speed;
 	if (game->data.map.grid[(int)move_y][(int)move_x] == '0')
 	{
 		game->player.pos_x = move_x;

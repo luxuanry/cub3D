@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_line.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lcao <lcao@student.42.fr>                  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/10/22 15:09:31 by lcao              #+#    #+#             */
+/*   Updated: 2025/10/22 15:41:48 by lcao             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/cub3d.h"
 
 int	parse_line(char *line, t_data *data)
@@ -26,3 +38,33 @@ int	parse_line(char *line, t_data *data)
 	else
 		return (parse_map_line(line, data));
 }
+
+// int parse_line(char *line, t_data *data)
+// {
+// 	if (is_empty_line(line))
+// 		return (1);
+// 	while (*line == ' ' || *line == '\t')
+// 		line++;
+// 	if (ft_strncmp(line, "NO ", 3) == 0)
+// 		return (data->map.height > 0 && error_msg("Map must be at the end of the file"),
+// 			parse_texture(line + 3, &data->textures.north, data));
+// 	else if (ft_strncmp(line, "SO ", 3) == 0)
+// 		return (data->map.height > 0 && error_msg("Map must be at the end of the file"),
+// 			parse_texture(line + 3, &data->textures.south, data));
+// 	else if (ft_strncmp(line, "WE ", 3) == 0)
+// 		return (data->map.height > 0 && error_msg("Map must be at the end of the file"),
+// 			parse_texture(line + 3, &data->textures.west, data));
+// 	else if (ft_strncmp(line, "EA ", 3) == 0)
+// 		return (data->map.height > 0 && error_msg("Map must be at the end of the file"),
+// 			parse_texture(line + 3, &data->textures.east, data));
+// 	else if (ft_strncmp(line, "F ", 2) == 0)
+// 		return (data->map.height > 0 && error_msg("Map must be at the end of the file"),
+// 			parse_color(line + 2, &data->colors, 'F', data));
+// 	else if (ft_strncmp(line, "C ", 2) == 0)
+// 		return (data->map.height > 0 && error_msg("Map must be at the end of the file"),
+// 			parse_color(line + 2, &data->colors, 'C', data));
+// 	else if (*line == '1' || *line == ' ')
+// 		return (parse_map_line(line, data));
+// 	else
+// 		return (error_msg("unknown identifier"));
+// }
