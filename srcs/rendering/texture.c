@@ -1,39 +1,42 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   texture.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: r <rxue@student.42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/10/22 12:56:28 by r                 #+#    #+#             */
+/*   Updated: 2025/10/22 12:56:30 by r                ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/cub3d.h"
 
-/*
- * calculate_texture_x - Calculate which X coordinate on the texture to use
- */
-int calculate_texture_x(t_ray *ray, double posX, double posY, int texWidth)
+int	calculate_texture_x(t_ray *ray, double pos_x, double pos_y, int texWidth)
 {
-	double wallX;
-	int texX;
-	
+	double	wall_x;
+	int		tex_x;
+
 	if (ray->side == 0)
-		wallX = posY + ray->perpWallDist * ray->rayDirY;
+		wall_x = pos_y + ray->perp_wall_dist * ray->raydir_y;
 	else
-		wallX = posX + ray->perpWallDist * ray->rayDirX;
-	wallX -= floor(wallX);
-	
-	texX = (int)(wallX * (double)texWidth);
-	
-	if (ray->side == 0 && ray->rayDirX > 0)
-		texX = texWidth - texX - 1;
-	if (ray->side == 1 && ray->rayDirY < 0)
-		texX = texWidth - texX - 1;
-	
-	return (texX);
+		wall_x = pos_x + ray->perp_wall_dist * ray->raydir_x;
+	wall_x -= floor(wall_x);
+	tex_x = (int)(wall_x * (double)texWidth);
+	if (ray->side == 0 && ray->raydir_x > 0)
+		tex_x = texWidth - tex_x - 1;
+	if (ray->side == 1 && ray->raydir_y < 0)
+		tex_x = texWidth - tex_x - 1;
+	return (tex_x);
 }
 
-/*
- * select_wall_texture - Determine which texture to use
- */
-char *select_wall_texture(t_ray *ray, t_game *game)
+char	*select_wall_texture(t_ray *ray, t_game *game)
 {
-	if (ray->side == 1 && ray->rayDirY < 0)
+	if (ray->side == 1 && ray->raydir_y < 0)
 		return (game->tex.north_addr);
-	if (ray->side == 1 && ray->rayDirY > 0)
+	if (ray->side == 1 && ray->raydir_y > 0)
 		return (game->tex.south_addr);
-	if (ray->side == 0 && ray->rayDirX < 0)
+	if (ray->side == 0 && ray->raydir_x < 0)
 		return (game->tex.west_addr);
 	return (game->tex.east_addr);
 }

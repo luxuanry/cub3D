@@ -8,23 +8,16 @@ int	add_map_line(char *line, t_data *data)
 
 	len = ft_strlen(line);
 	if (len > 0 && line[len - 1] == '\n')
-		line[len - 1] = '\0';
+		line[--len] = '\0';
 	new_grid = malloc(sizeof(char *) * (data->map.height + 1));
 	if (!new_grid)
 		return (error_msg("Memory allocation failed"));
-	i = 0;
-	while (i < data->map.height)
-	{
+	i = -1;
+	while (++i < data->map.height)
 		new_grid[i] = data->map.grid[i];
-		i++;
-	}
 	new_grid[i] = ft_strdup(line);
 	if (!new_grid[i])
-	{
-		free(new_grid);
-		return (error_msg("Memory allocation failed"));
-	}
-	len = ft_strlen(line);
+		return (free(new_grid), error_msg("Memory allocation failed"));
 	if (len > data->map.width)
 		data->map.width = len;
 	if (data->map.grid)
@@ -43,7 +36,7 @@ int	parse_map_line(char *line, t_data *data)
 	return (1);
 }
 
-int parse_file(char *filename, t_data *data)
+int	parse_file(char *filename, t_data *data)
 {
 	int		fd;
 	char	*line;
@@ -58,12 +51,7 @@ int parse_file(char *filename, t_data *data)
 	while (line != NULL)
 	{
 		if (!parse_line(line, data))
-		{
-			free(line);
-			close(fd);
-			get_next_line(-1);
-			return (0);
-		}
+			return (free(line), close(fd), get_next_line(-1), 0);
 		free(line);
 		line = get_next_line(fd);
 	}

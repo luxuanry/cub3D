@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   mouse.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: r <rxue@student.42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/10/22 12:57:16 by r                 #+#    #+#             */
+/*   Updated: 2025/10/22 12:57:18 by r                ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/cub3d.h"
 
 /*
@@ -17,16 +29,16 @@ static void	apply_rotation(t_game *game, double rotation)
 	double	old_dir_x;
 	double	old_plane_x;
 
-	old_dir_x = game->player.dirX;
-	game->player.dirX = game->player.dirX * cos(rotation)
-		- game->player.dirY * sin(rotation);
-	game->player.dirY = old_dir_x * sin(rotation)
-		+ game->player.dirY * cos(rotation);
-	old_plane_x = game->player.planeX;
-	game->player.planeX = game->player.planeX * cos(rotation)
-		- game->player.planeY * sin(rotation);
-	game->player.planeY = old_plane_x * sin(rotation)
-		+ game->player.planeY * cos(rotation);
+	old_dir_x = game->player.dir_x;
+	game->player.dir_x = game->player.dir_x * cos(rotation)
+		- game->player.dir_y * sin(rotation);
+	game->player.dir_y = old_dir_x * sin(rotation)
+		+ game->player.dir_y * cos(rotation);
+	old_plane_x = game->player.plane_x;
+	game->player.plane_x = game->player.plane_x * cos(rotation)
+		- game->player.plane_y * sin(rotation);
+	game->player.plane_y = old_plane_x * sin(rotation)
+		+ game->player.plane_y * cos(rotation);
 }
 
 int	mouse_rotate(int x, int y, t_game *game)
@@ -47,17 +59,10 @@ int	mouse_rotate(int x, int y, t_game *game)
 		return (0);
 	rotation = -(x - last_x) * 0.0005;
 	apply_rotation(game, rotation);
-	last_x = SCREEN_WIDTH / 2;
-	mlx_mouse_move(game->mlx, game->win, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
+	last_x = x;
 	return (0);
 }
 
-/*
- * mouse_hide - Hide the mouse cursor
- * @game: Main game structure
- * 
- * Hides the mouse cursor for immersive gameplay.
- */
 void	mouse_hide(t_game *game)
 {
 	mlx_mouse_hide(game->mlx, game->win);

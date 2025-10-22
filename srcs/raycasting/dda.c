@@ -1,96 +1,88 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   dda.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: r <rxue@student.42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/10/22 12:52:47 by r                 #+#    #+#             */
+/*   Updated: 2025/10/22 12:52:49 by r                ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/cub3d.h"
 
-void	init_dda(t_ray *ray, double posX, double posY)
+void	init_dda(t_ray *ray, double pos_x, double pos_y)
 {
-	ray->mapX = (int)posX;
-	ray->mapY = (int)posY;
-	
-	// Calculate delta distances
-	ray->deltaDistX = fabs(1 / ray->rayDirX);
-	ray->deltaDistY = fabs(1 / ray->rayDirY);
-	
-	// Calculate step direction and initial side distances
-	if (ray->rayDirX < 0)
+	ray->map_x = (int)pos_x;
+	ray->map_y = (int)pos_y;
+	ray->delta_dist_x = fabs(1 / ray->raydir_x);
+	ray->delta_dist_y = fabs(1 / ray->raydir_y);
+	if (ray->raydir_x < 0)
 	{
-		ray->stepX = -1;
-		ray->sideDistX = (posX - ray->mapX) * ray->deltaDistX;
+		ray->step_x = -1;
+		ray->side_dist_x = (pos_x - ray->map_x) * ray->delta_dist_x;
 	}
 	else
 	{
-		ray->stepX = 1;
-		ray->sideDistX = (ray->mapX + 1.0 - posX) * ray->deltaDistX;
+		ray->step_x = 1;
+		ray->side_dist_x = (ray->map_x + 1.0 - pos_x) * ray->delta_dist_x;
 	}
-	
-	if (ray->rayDirY < 0)
+	if (ray->raydir_y < 0)
 	{
-		ray->stepY = -1;
-		ray->sideDistY = (posY - ray->mapY) * ray->deltaDistY;
+		ray->step_y = -1;
+		ray->side_dist_y = (pos_y - ray->map_y) * ray->delta_dist_y;
 	}
 	else
 	{
-		ray->stepY = 1;
-		ray->sideDistY = (ray->mapY + 1.0 - posY) * ray->deltaDistY;
+		ray->step_y = 1;
+		ray->side_dist_y = (ray->map_y + 1.0 - pos_y) * ray->delta_dist_y;
 	}
 }
 
-/*
- * perform_dda - Perform the DDA algorithm to find wall hits
- * @ray: Ray structure with DDA variables
- * @map: 2D map array
- * @height: Map height
- * @width: Map width
- * 
- * Steps through the grid until hitting a wall.
- */
-void perform_dda(t_ray *ray, char **map, int height)
+static int	is_wall_hit(t_ray *ray, char **map, int height)
 {
-	int hit = 0;
-	int row_len;
-	int max_steps = 100;
-	int steps = 0;
-	
-	while (hit == 0 && steps < max_steps)
+	int	row_len;
+
+	if (ray->map_y < 0 || ray->map_y >= height || ray->map_x < 0)
+		return (1);
+	if (!map[ray->map_y])
+		return (1);
+	row_len = ft_strlen(map[ray->map_y]);
+	if (ray->map_x >= row_len)
+		return (1);
+	if (map[ray->map_y][ray->map_x] == '1' || map[ray->map_y][ray->map_x] == ' ')
+		return (1);
+	return (0);
+}
+
+static void	step_ray(t_ray *ray)
+{
+	if (ray->side_dist_x < ray->side_dist_y)
+	{
+		ray->side_dist_x += ray->delta_dist_x;
+		ray->map_x += ray->step_x;
+		ray->side = 0;
+	}
+	else
+	{
+		ray->side_dist_y += ray->delta_dist_y;
+		ray->map_y += ray->step_y;
+		ray->side = 1;
+	}
+}
+
+void	perform_dda(t_ray *ray, char **map, int height)
+{
+	int	hit;
+	int	steps;
+
+	hit = 0;
+	steps = 0;
+	while (!hit && steps < 100)
 	{
 		steps++;
-		
-		// Jump to next map square
-		if (ray->sideDistX < ray->sideDistY)
-		{
-			ray->sideDistX += ray->deltaDistX;
-			ray->mapX += ray->stepX;
-			ray->side = 0;
-		}
-		else
-		{
-			ray->sideDistY += ray->deltaDistY;
-			ray->mapY += ray->stepY;
-			ray->side = 1;
-		}
-		
-		// Bounds checking
-		if (ray->mapY < 0 || ray->mapY >= height || ray->mapX < 0)
-		{
-			hit = 1;
-			continue;
-		}
-		
-		// Check if map row exists
-		if (!map[ray->mapY])
-		{
-			hit = 1;
-			continue;
-		}
-		
-		// Check row length
-		row_len = ft_strlen(map[ray->mapY]);
-		if (ray->mapX >= row_len)
-		{
-			hit = 1;
-			continue;
-		}
-		
-		// Check if we hit a wall or space
-		if (map[ray->mapY][ray->mapX] == '1' || map[ray->mapY][ray->mapX] == ' ')
-			hit = 1;
+		step_ray(ray);
+		hit = is_wall_hit(ray, map, height);
 	}
 }
